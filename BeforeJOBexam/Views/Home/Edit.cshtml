@@ -1,0 +1,173 @@
+﻿@model BeforeJOBexam.Models.Employee
+
+@{
+    ViewData["Title"] = "Edit Employee";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+                <div class="card-header bg-warning text-dark text-center py-3">
+                    <h2 class="mb-0">Edit Employee</h2>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <form asp-action="Edit">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+                        <input type="hidden" asp-for="Id" />
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label asp-for="FirstName" class="form-label fw-semibold"></label>
+                                <input asp-for="FirstName" class="form-control" />
+                                <span asp-validation-for="FirstName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="LastName" class="form-label fw-semibold"></label>
+                                <input asp-for="LastName" class="form-control" />
+                                <span asp-validation-for="LastName" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Email" class="form-label fw-semibold"></label>
+                                <input asp-for="Email" class="form-control" />
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Phone" class="form-label fw-semibold"></label>
+                                <input asp-for="Phone" class="form-control" />
+                                <span asp-validation-for="Phone" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="HireDate" class="form-label fw-semibold"></label>
+                                <input asp-for="HireDate" class="form-control" type="date" />
+                                <span asp-validation-for="HireDate" class="text-danger"></span>
+                            </div>
+
+                            <!-- Department Dropdown -->
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Department</label>
+                                <select id="departmentSelect" class="form-select">
+                                    <option value="">-- Select Department --</option>
+                                    <option value="IT">IT</option>
+                                    <option value="HR">HR</option>
+                                    <option value="Admin">Admin</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+
+                            <!-- Hidden field bound to model -->
+                            <input type="hidden" asp-for="Department" id="departmentValue" />
+
+                            <!-- Custom Department -->
+                            <div class="col-12" id="otherDepartmentDiv" style="display:none;">
+                                <label class="form-label fw-semibold">
+                                    Specify Other Department
+                                </label>
+                                <input type="text"
+                                       id="otherDepartment"
+                                       class="form-control"
+                                       placeholder="Enter department name" />
+                            </div>
+
+                            <div class="col-12">
+                                <span asp-validation-for="Department" class="text-danger"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="Salary" class="form-label fw-semibold"></label>
+                                <div class="input-group">
+                                    <span class="input-group-text">$</span>
+                                    <input asp-for="Salary" class="form-control" />
+                                </div>
+                                <span asp-validation-for="Salary" class="text-danger"></span>
+                            </div>
+
+                        </div>
+
+                        <hr class="my-4" />
+
+                        <div class="d-flex justify-content-between">
+                            <a asp-action="Index" class="btn btn-outline-secondary">
+                                ← Back to List
+                            </a>
+
+                            <button type="submit" class="btn btn-warning px-4">
+                                Save Changes
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        $(document).ready(function () {
+
+            var fixedDepartments = ['IT', 'HR', 'Admin'];
+            var currentDept = '@Model.Department';
+
+            // Initialize department selection
+            if (currentDept) {
+
+                if (fixedDepartments.includes(currentDept)) {
+                    $('#departmentSelect').val(currentDept);
+                    $('#departmentValue').val(currentDept);
+                }
+                else {
+                    $('#departmentSelect').val('Other');
+                    $('#otherDepartmentDiv').show();
+                    $('#otherDepartment').val(currentDept);
+                    $('#departmentValue').val(currentDept);
+                }
+            }
+
+            $('#departmentSelect').change(function () {
+
+                var selectedValue = $(this).val();
+
+                if (selectedValue === 'Other') {
+                    $('#otherDepartmentDiv').slideDown();
+                    $('#otherDepartment').val('');
+                    $('#departmentValue').val('');
+                }
+                else {
+                    $('#otherDepartmentDiv').slideUp();
+                    $('#otherDepartment').val('');
+                    $('#departmentValue').val(selectedValue);
+                }
+            });
+
+            $('#otherDepartment').on('input', function () {
+                $('#departmentValue').val($(this).val());
+            });
+
+            $('form').submit(function () {
+
+                if ($('#departmentSelect').val() === 'Other') {
+                    $('#departmentValue').val($('#otherDepartment').val());
+                }
+
+            });
+
+        });
+    </script>
+}

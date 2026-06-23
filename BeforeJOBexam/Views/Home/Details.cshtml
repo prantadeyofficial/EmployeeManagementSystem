@@ -1,0 +1,107 @@
+﻿@model BeforeJOBexam.Models.Employee
+
+@{
+    ViewData["Title"] = "Employee Details";
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="card shadow-lg border-0 rounded-4">
+
+                <div class="card-header bg-info text-white text-center py-3">
+                    <h2 class="mb-0">Employee Details</h2>
+                </div>
+
+                <div class="card-body p-4">
+
+                    <div class="row g-4">
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                First Name
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.FirstName
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                Last Name
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.LastName
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                Email
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.Email
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                Phone
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.Phone
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                Hire Date
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.HireDate.ToString("yyyy-MM-dd")
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                Department
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.Department
+                            </div>
+                        </div>
+
+                        <div class="col-md-6">
+                            <label class="form-label fw-semibold text-muted">
+                                Salary
+                            </label>
+                            <div class="form-control bg-light">
+                                @Model.Salary.ToString("C")
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <hr class="my-4" />
+
+                    <div class="d-flex justify-content-between">
+                        <a asp-action="Index"
+                           class="btn btn-outline-secondary">
+                            ← Back to List
+                        </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.Id"
+                           class="btn btn-warning px-4">
+                            Edit Employee
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
